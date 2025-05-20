@@ -3,90 +3,105 @@
 <head>
   <meta charset="UTF-8" />
   <title>Payment - GroceryMarket</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <style>
-    /* Your existing styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .amount-display {
+      text-align: center;
+      font-size: 1.2em;
+      margin: 20px 0;
+    }
+    .pay-button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background-color: #002970;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .pay-button:hover {
+      background-color: #001f4d;
+    }
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
   </style>
 </head>
 <body>
-  <section class="hero" id="payment">
-    <div class="hero-content" style="flex-direction: column; align-items: center;">
-      <h1>Pay Securely with Razorpay</h1>
-      <p>Click below to complete your payment</p>
-
-      <button class="add-to-cart" id="razorpay-button" onclick="payNow()">💳 Pay with Razorpay</button>
-
-      <div id="confirmation"></div>
-      <div id="error"></div>
+  <div class="container">
+    <h1>Pay Securely with Razorpay</h1>
+    <div class="amount-display">
+      Total Amount: ₹<span id="total-amount">0</span>
     </div>
-  </section>
-
-  <!-- Paytm Payment Option -->
-  <!-- Your existing Paytm payment section -->
-
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2025 GroceryMarket. All Rights Reserved.</p>
-      <p>Made with ❤️ by itz_rajat98</p>
-    </div>
-  </footer>
+    <button class="pay-button" id="razorpay-button">💳 Pay with Razorpay</button>
+    <div id="message" class="message"></div>
+  </div>
 
   <script>
+    // Function to calculate total amount from cart
     function calculateTotal() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       const total = cart.reduce((sum, item) => {
-        const price = parseInt(item.price.replace(/[^\d]/g, ""));
+        const price = parseInt(item.price.replace(/[^\d]/g, ""), 10);
         return sum + price * item.quantity;
       }, 0);
       return total;
     }
 
+    // Function to update the displayed total amount
+    function updateTotalDisplay() {
+      const totalAmount = calculateTotal();
+      document.getElementById("total-amount").textContent = totalAmount;
+    }
+
+    // Function to initiate Razorpay payment
     function payNow() {
       const totalAmount = calculateTotal();
 
-      console.log("Cart Total:", totalAmount);
-
       if (totalAmount <= 0) {
-        document.getElementById("error").textContent = "❌ Cannot proceed: Total amount is zero.";
+        displayMessage("❌ Cannot proceed: Total amount is zero.", "error");
         return;
       }
 
       const options = {
         key: "YOUR_KEY_ID", // Replace with your Razorpay Key ID
-        amount: totalAmount * 100,
+        amount: totalAmount * 100, // Amount in paise
         currency: "INR",
         name: "GroceryMarket",
         description: `Total Amount to Pay: ₹${totalAmount}`,
         image: "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
         handler: function (response) {
-          // Send payment details to server for verification
-          fetch('/api/verify', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature
-            })
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.success) {
-              document.getElementById("confirmation").textContent =
-                "✅ Payment successful! Payment ID: " + response.razorpay_payment_id;
-            } else {
-              document.getElementById("error").textContent =
-                "❌ Payment verification failed.";
-            }
-          })
-          .catch(error => {
-            console.error('Error verifying payment:', error);
-            document.getElementById("error").textContent =
-              "❌ An error occurred during payment verification.";
-          });
+          displayMessage("✅ Payment successful! Payment ID: " + response.razorpay_payment_id, "success");
         },
         prefill: {
           name: "Grocery Shopper",
@@ -102,42 +117,22 @@
       rzp.open();
 
       rzp.on('payment.failed', function (response) {
-        document.getElementById("error").textContent =
-          "❌ Payment failed: " + response.error.description;
+        displayMessage("❌ Payment failed: " + response.error.description, "error");
       });
     }
 
-    function updatePaytmLink() {
-      const total = calculateTotal();
-
-      const upiId = "grocerymarket@paytm";
-      const payeeName = "GroceryMarket";
-      const currency = "INR";
-
-      const upiUri = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${total}&cu=${currency}`;
-      document.getElementById("paytm-amount").textContent = total;
-
-      const paytmButtonWrapper = document.getElementById("paytm-button-wrapper");
-      paytmButtonWrapper.innerHTML = '';
-
-      const button = document.createElement('a');
-      button.href = upiUri;
-      button.className = 'pay-button';
-      button.textContent = `📲 Pay ₹${total} with Paytm UPI`;
-
-      paytmButtonWrapper.appendChild(button);
+    // Function to display messages
+    function displayMessage(message, type) {
+      const messageDiv = document.getElementById("message");
+      messageDiv.textContent = message;
+      messageDiv.className = `message ${type}`;
     }
 
-    function updateRazorpayButtonLabel() {
-      const total = calculateTotal();
-      const razorpayButton = document.getElementById("razorpay-button");
-      razorpayButton.textContent = `💳 Pay ₹${total} with Razorpay`;
-    }
+    // Event listener for the payment button
+    document.getElementById("razorpay-button").addEventListener("click", payNow);
 
-    document.addEventListener("DOMContentLoaded", () => {
-      updatePaytmLink();
-      updateRazorpayButtonLabel();
-    });
+    // Update total amount on page load
+    document.addEventListener("DOMContentLoaded", updateTotalDisplay);
   </script>
 </body>
 </html>
