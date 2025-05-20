@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GroceryMarket</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .footer {
+      background-color: #87CEEB; /* Sky Blue Color */
+      color: #003366; /* Dark Blue Text */
+      padding: 20px 0;
+      text-align: center;
+      font-size: 14px;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
+  
+    .footer p {
+      margin: 5px 0;
+    }
+  
+    .footer a {
+      color: #00a676;
+      text-decoration: none;
+    }
+  
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <div class="logo">🛒 GroceryMarket</div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li class="dropdown">
+            <a href="#">Categories ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="#fruits">Fruits</a></li>
+              <li><a href="#vegetables">Vegetables</a></li>
+              <li><a href="#dairy">Dairy</a></li>
+              <li><a href="#snacks">Snacks</a></li>
+            </ul>
+          </li>
+          <li><a href="feedback.html">Feedback</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="payment.html">Pay</a></li>
+          <li class="cart"><a href="cart.html">🛒 (0)</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" class="hero-img" alt="Groceries" />
+      <div>
+        <h1>Fast, Fresh, Delivered</h1>
+        <p>Get fresh groceries at your doorstep in minutes.</p>
+        <input type="text" placeholder="🔍 Search for products..." />
+      </div>
+    </div>
+  </section>
+
+  <section class="product-section" id="products">
+    <h2>Popular Products</h2>
+  
+    <!-- Fruits -->
+    <h3 id="fruits">🍎 Fruits</h3>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Apple" alt="Apple">
+        <h3>Fresh Apples</h3>
+        <p>₹80 / kg</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+  
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Banana" alt="Banana">
+        <h3>Bananas</h3>
+        <p>₹40 / dozen</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+    </div>
+  
+    <!-- Vegetables -->
+    <h3 id="vegetables">🥕 Vegetables</h3>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Tomato" alt="Tomato">
+        <h3>Tomatoes</h3>
+        <p>₹30 / kg</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+  
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Onion" alt="Onion">
+        <h3>Red Onions</h3>
+        <p>₹25 / kg</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+  
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Carrot" alt="Carrot">
+        <h3>Carrots</h3>
+        <p>₹45 / kg</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+  
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Potato" alt="Potato">
+        <h3>Potatoes</h3>
+        <p>₹20 / kg</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+    </div>
+  
+    <!-- Dairy -->
+    <h3 id="dairy">🥛 Dairy</h3>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Milk" alt="Milk">
+        <h3>Fresh Milk</h3>
+        <p>₹50 / litre</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+  
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Butter" alt="Butter">
+        <h3>Butter</h3>
+        <p>₹45 / 100g</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+  
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Paneer" alt="Paneer">
+        <h3>Paneer</h3>
+        <p>₹90 / 200g</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+  
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Cheese" alt="Cheese">
+        <h3>Cheese</h3>
+        <p>₹120 / pack</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+    </div>
+  
+    <!-- Snacks -->
+    <h3 id="snacks">🍪 Snacks</h3>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Biscuits" alt="Biscuits">
+        <h3>Biscuits</h3>
+        <p>₹20 / pack</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+  
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Chips" alt="Chips">
+        <h3>Potato Chips</h3>
+        <p>₹25 / pack</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+    </div>
+  
+    <!-- Essentials -->
+    <h3 id="essentials">🛒 Grocery Essentials</h3>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Rice" alt="Rice">
+        <h3>Basmati Rice</h3>
+        <p>₹65 / kg</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+  
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Atta" alt="Wheat Flour">
+        <h3>Wheat Flour (Atta)</h3>
+        <p>₹40 / kg</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+  
+      <div class="product-card">
+        <img src="https://via.placeholder.com/150?text=Oil" alt="Cooking Oil">
+        <h3>Sunflower Oil</h3>
+        <p>₹120 / litre</p>
+        <div class="quantity-control">
+          <button onclick="decreaseQuantity(this)">−</button>
+          <input type="number" value="1" min="1">
+          <button onclick="increaseQuantity(this)">+</button>
+        </div>
+        <button class="add-to-cart">🛒 Add to Cart</button>
+      </div>
+    </div>
+  </section>
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2025 GroceryMarket. All Rights Reserved.</p>
+    <p>Made with ❤️ by itz_rajat98</p>
+  </div>
+</footer>
+
+<!-- Styles for Footer -->
+
+       
+  
+
+  <script>
+    function increaseQuantity(btn) {
+      const input = btn.parentNode.querySelector('input');
+      input.value = parseInt(input.value) + 1;
+    }
+
+    function decreaseQuantity(btn) {
+      const input = btn.parentNode.querySelector('input');
+      if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+      }
+    }
+  </script>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCartIcon() {
+      const cartLink = document.querySelector('.cart a');
+      cartLink.innerHTML = `🛒 (${cart.length})`;
+    }
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const productCard = e.target.closest('.product-card');
+        const name = productCard.querySelector('h3').innerText;
+        const price = productCard.querySelector('p').innerText;
+        const quantity = parseInt(productCard.querySelector('input').value);
+
+        const item = { name, price, quantity };
+        cart.push(item);
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        updateCartIcon();
+        alert(`${quantity} x ${name} added to cart.`);
+      });
+    });
+
+    updateCartIcon(); // on page load
+  </script>
+
+</body>
+</html>

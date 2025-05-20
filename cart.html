@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cart - GroceryMarket</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <div class="logo">🛒 GroceryMarket</div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="payment.html">Pay</a></li>
+          <li class="cart"><a href="cart.html">🛒 (0)</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Cart Section -->
+  <section class="product-section">
+    <h2>Your Cart</h2>
+    <div id="cart-items" class="product-grid"></div>
+    <div style="text-align: center; margin-top: 2rem;">
+      <h3>Total: ₹<span id="total">0</span></h3>
+    </div>
+  </section>
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 GroceryMarket. All Rights Reserved.</p>
+      <p>Made with ❤️ by itz_rajat98</p>
+    </div>
+  </footer>
+  
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCartIcon() {
+      const cartLink = document.querySelector('.cart a');
+      cartLink.innerHTML = `🛒 (${cart.length})`;
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart() {
+      const cartItems = document.getElementById("cart-items");
+      const totalSpan = document.getElementById("total");
+      cartItems.innerHTML = "";
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+        totalSpan.textContent = "0";
+        updateCartIcon();
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+
+        const price = parseInt(item.price.replace(/[^\d]/g, ""));
+        const itemTotal = price * item.quantity;
+        total += itemTotal;
+
+        card.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>${item.price}</p>
+          <p>Quantity: ${item.quantity}</p>
+          <p>Subtotal: ₹${itemTotal}</p>
+          <button class="add-to-cart" onclick="removeItem(${index})">Remove</button>
+        `;
+        cartItems.appendChild(card);
+      });
+
+      totalSpan.textContent = total;
+      updateCartIcon();
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>
